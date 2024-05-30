@@ -25,9 +25,7 @@
                 <h2>Billed to: {{BillingData!.billing_to}}</h2>
                 <span>Purpose: {{BillingData!.purpose}}</span>
             </div>
-            <div class="comment default-padding">
-                <span>Comment</span>
-            </div>
+        
             @if(true){
                 <button (click)="MakePayment()">Make Payment</button>
             }@else {
