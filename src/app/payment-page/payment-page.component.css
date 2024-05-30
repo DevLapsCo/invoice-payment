@@ -1,0 +1,93 @@
+.payment{
+    width: 100%;
+    height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card{
+    width: 70dvh;
+    padding: 30px;
+    background-color: #fff;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.226);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.logo{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+/* .default-padding{
+    padding: 10px;
+} */
+
+.logo img{
+    width: 25px;
+}
+
+.bill{
+    padding: 20px;
+    background-color: #1b59e8;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.billing-price{
+    font-size: 3rem;
+    color: #fff;
+    font-family: 'Clash Display';
+    font-weight: 500;
+}
+
+.card button{
+    padding: 10px;
+    font-size: 1.5rem;
+    background-color: #000;
+    color: #fff;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.card button:active{
+    background-color: #001851;
+}
+
+.loading{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.successful{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.successful svg{
+    width: 30px;
+}
+
+.successful span{
+    font-size: 25px;
+}
