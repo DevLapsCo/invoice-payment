@@ -22,7 +22,9 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 dir("${PROJECT_DIR}") {
-                    sh 'npm install'
+                   withNPM(npmrcConfig: 'my-custom-nprc') {
+                       sh 'npm install'
+                    }
                 }
             }
         }
@@ -30,7 +32,7 @@ pipeline {
         stage('Build Project') {
             steps {
                 dir("${PROJECT_DIR}") {
-                    sh 'ng build --prod'
+                    sh 'ng build'
                 }
             }
         }
