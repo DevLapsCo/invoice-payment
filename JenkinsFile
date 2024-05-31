@@ -23,7 +23,7 @@ pipeline {
             steps {
                 dir("${PROJECT_DIR}") {
                    withNPM(npmrcConfig: 'my-custom-nprc') {
-                       sh 'npm install'
+                       sh 'sudo npm install'
                     }
                 }
             }
