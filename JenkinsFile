@@ -42,7 +42,7 @@ pipeline {
         stage('Clean Host Directory') {
             steps {
                 // Clean the dist directory on the host VM
-                sh "docker exec ${CONTAINER_NAME} rm -rf ${HOST_PROJECT_DIR}/${DIST_DIR}"
+                sh "sudo docker exec ${CONTAINER_NAME} rm -rf ${HOST_PROJECT_DIR}/${DIST_DIR}"
             }
         }
 
@@ -50,7 +50,7 @@ pipeline {
             steps {
                 script {
                     // Copy the dist directory from the container to the host VM
-                    sh "docker cp ${CONTAINER_NAME}:${PROJECT_DIR}/${DIST_DIR} ${HOST_PROJECT_DIR}"
+                    sh "sudo docker cp ${CONTAINER_NAME}:${PROJECT_DIR}/${DIST_DIR} ${HOST_PROJECT_DIR}"
                 }
             }
         }
