@@ -31,7 +31,7 @@ pipeline {
         stage('Build Project') {
             steps {
                     sh 'ng build'
-                    sh 'sudo cp /workspace/BillingDvLps/dist /home/pandit_alabi'
+                    sh 'sudo cp /workspace/BillingDvLps/dist /var'
                     // mkdir frontend-dicst in the workspace
                     //  cp dist to \[WORKD]
                     // create new folder / frontend-dist
