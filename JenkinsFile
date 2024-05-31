@@ -1,0 +1,78 @@
+pipeline {
+    agent any
+
+    environment {
+        // Set environment variables if needed
+        NODEJS_HOME = tool name: 'NodeJS 18', type: 'NodeJSInstallation'
+        PATH = "${env.NODEJS_HOME}/bin:${env.PATH}"
+    }
+
+    stages {
+        stage('Prepare Workspace') {
+            steps {
+                // Clean the workspace before starting
+                cleanWs()
+
+                // Copy files from local repository path to workspace
+                script {
+                    def localRepoPath = '/home/pandit_alabi/invoice-payment'
+                    sh "cp -r ${localRepoPath}/* ${pwd()}/"
+                }
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                // Install Node.js dependencies
+                sh 'npm install'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                // Build the Angular application
+                sh 'ng build --prod'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                // Run tests
+                sh 'ng test --watch=false'
+            }
+        }
+
+        stage('Lint') {
+            steps {
+                // Lint the code
+                sh 'ng lint'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // Deploy the application
+                // This step will vary based on how you deploy your Angular application
+                // For example, you can copy the build files to a web server
+                sh '''
+                rsync -avz --delete dist/your-app-name/ user@server:/path/to/deploy/
+                '''
+            }
+        }
+    }
+
+    post {
+        always {
+            // Actions that should happen after every build
+            cleanWs()
+        }
+        success {
+            // Actions that should happen after a successful build
+            echo 'Build succeeded!'
+        }
+        failure {
+            // Actions that should happen after a failed build
+            echo 'Build failed!'
+        }
+    }
+}
