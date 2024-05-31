@@ -11,7 +11,7 @@ pipeline {
     }
 
     tools {
-        angular-build '22'
+        angularBuild '22' // Use Node.js version 22 as 'angular-build'
     }
 
     stages {
