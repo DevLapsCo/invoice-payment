@@ -51,7 +51,7 @@ pipeline {
                 script {
                     // Copy the dist directory from the container to the host VM
                     sh "ls"
-                    sh "docker cp jenkins-blueocean:/project/${DIST_DIR} ${HOST_PROJECT_DIR}"
+                    sh "docker cp ./project/${DIST_DIR} ${HOST_PROJECT_DIR}"
                 }
             }
         }
