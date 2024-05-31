@@ -17,25 +17,19 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                dir("${PROJECT_DIR}") {
                         sh "git clone https://${GITHUB_KEY}@${REPO_URL} ."
-                }
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                dir("${PROJECT_DIR}") {
                        sh 'npm install'
-                }
             }
         }
 
         stage('Build Project') {
             steps {
-                dir("${PROJECT_DIR}") {
                     sh 'ng build'
-                }
             }
         }
 
