@@ -16,7 +16,9 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
+                withCredentials(${GITHUB_KEY}){}
                          sh "git clone https://${GITHUB_KEY}@${REPO_URL} /home/pandit_alabi"
+            }
             }
         }
 
