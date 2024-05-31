@@ -7,14 +7,15 @@ pipeline {
         PROJECT_DIR = '/project'  // Directory in the container
         HOST_PROJECT_DIR = '/home/pandit_alabi/invoice-paymnment'  // Directory on the host VM
         CONTAINER_NAME = 'jenkins-blueocean'
+        GITHUB_KEY = credentials('github_secret_key')
     }
 
     stages {
         stage('Clone Repository') {
             steps {
                 dir("${PROJECT_DIR}") {
-                    withCredentials([string(credentialsId: 'github_secret_key')]) {
-                        sh "git clone https://${github_secret_key}@${REPO_URL} ."
+                    withCredentials(${GITHUB_KEY}) {
+                        sh "git clone https://${github_secret}@${REPO_URL} ."
                     }
                 }
             }
