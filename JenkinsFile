@@ -14,9 +14,7 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 dir("${PROJECT_DIR}") {
-                    withCredentials(${GITHUB_KEY}) {
-                        sh "git clone https://${github_secret}@${REPO_URL} ."
-                    }
+                        sh "git clone https://${GITHUB_KEY}@${REPO_URL} ."
                 }
             }
         }
