@@ -4,7 +4,6 @@ pipeline {
     environment {
         REPO_URL = 'github.com/DevLapsCo/invoice-payment.git'
         DIST_DIR = 'dist'
-        PROJECT_DIR = 'project'  // Directory in the container
         HOST_PROJECT_DIR = '/invoice-payment'  // Directory on the host VM
         CONTAINER_NAME = 'jenkins-blueocean'
         GITHUB_KEY = credentials('github_secret_key')
@@ -17,29 +16,26 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                dir("${PROJECT_DIR}") {
+         
                         sh "git clone https://${GITHUB_KEY}@${REPO_URL} ."
-                }
+            
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                dir("${PROJECT_DIR}") {
                        sh 'npm install'
-                }
             }
         }
 
         stage('Build Project') {
             steps {
-                dir("${PROJECT_DIR}") {
                     sh 'ng build'
 
                     // mkdir frontend-dicst in the workspace
                     //  cp dist to \[WORKD]
                     // create new folder / frontend-dist
-                }
+        
             }
         }
 
