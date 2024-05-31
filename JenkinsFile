@@ -16,7 +16,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                dir("/dist"){
+                dir('dist'){
                          sh "git clone https://${GITHUB_KEY}@${REPO_URL} /home/pandit_alabi"
                 }
             }
