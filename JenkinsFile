@@ -10,6 +10,10 @@ pipeline {
         GITHUB_KEY = credentials('github_secret_key')
     }
 
+    tools {
+        angular-build '22'
+    }
+
     stages {
         stage('Clone Repository') {
             steps {
