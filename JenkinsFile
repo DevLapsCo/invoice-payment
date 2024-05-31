@@ -5,7 +5,7 @@ pipeline {
         REPO_URL = 'github.com/DevLapsCo/invoice-payment.git'
         DIST_DIR = 'dist'
         PROJECT_DIR = 'sudo cd /project'  // Directory in the container
-        HOST_PROJECT_DIR = './invoice-payment'  // Directory on the host VM
+        HOST_PROJECT_DIR = '~/invoice-payment'  // Directory on the host VM
         CONTAINER_NAME = 'jenkins-blueocean'
         GITHUB_KEY = credentials('github_secret_key')
     }
@@ -50,7 +50,8 @@ pipeline {
             steps {
                 script {
                     // Copy the dist directory from the container to the host VM
-                    sh "sudo docker cp jenkins-blueocean:/project/${DIST_DIR} ${HOST_PROJECT_DIR}"
+                    sh "ls"
+                    sh "docker cp jenkins-blueocean:/project/${DIST_DIR} ${HOST_PROJECT_DIR}"
                 }
             }
         }
