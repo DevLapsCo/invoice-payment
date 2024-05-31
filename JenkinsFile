@@ -2,77 +2,60 @@ pipeline {
     agent any
 
     environment {
-        // Set environment variables if needed
-        NODEJS_HOME = tool name: 'NodeJS 18', type: 'NodeJSInstallation'
-        PATH = "${env.NODEJS_HOME}/bin:${env.PATH}"
+        REPO_URL = 'https://github.com/<your-username>/<your-repo>.git'
+        DIST_DIR = 'dist'
+        PROJECT_DIR = '/project'  // Directory in the container
+        HOST_PROJECT_DIR = '/path/to/your/project'  // Directory on the host VM
+        CONTAINER_NAME = 'jenkins'
     }
 
     stages {
-        stage('Prepare Workspace') {
+        stage('Clone Repository') {
             steps {
-                // Clean the workspace before starting
-                cleanWs()
-
-                // Copy files from local repository path to workspace
-                script {
-                    def localRepoPath = '/home/pandit_alabi/invoice-payment'
-                    sh "cp -r ${localRepoPath}/* ${pwd()}/"
+                dir("${PROJECT_DIR}") {
+                    withCredentials([string(credentialsId: 'github-token-id', variable: 'GITHUB_TOKEN')]) {
+                        sh "git clone https://${GITHUB_TOKEN}@${REPO_URL} ."
+                    }
                 }
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                // Install Node.js dependencies
-                sh 'npm install'
+                dir("${PROJECT_DIR}") {
+                    sh 'npm install'
+                }
             }
         }
 
-        stage('Build') {
+        stage('Build Project') {
             steps {
-                // Build the Angular application
-                sh 'ng build --prod'
+                dir("${PROJECT_DIR}") {
+                    sh 'ng build --prod'
+                }
             }
         }
 
-        stage('Test') {
+        stage('Clean Host Directory') {
             steps {
-                // Run tests
-                sh 'ng test --watch=false'
+                // Clean the dist directory on the host VM
+                sh "docker exec ${CONTAINER_NAME} rm -rf ${HOST_PROJECT_DIR}/${DIST_DIR}"
             }
         }
 
-        stage('Lint') {
+        stage('Copy Dist to Host') {
             steps {
-                // Lint the code
-                sh 'ng lint'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                // Deploy the application
-                // This step will vary based on how you deploy your Angular application
-                // For example, you can copy the build files to a web server
-                sh '''
-                rsync -avz --delete dist/your-app-name/ user@server:/path/to/deploy/
-                '''
+                script {
+                    // Copy the dist directory from the container to the host VM
+                    sh "docker cp ${CONTAINER_NAME}:${PROJECT_DIR}/${DIST_DIR} ${HOST_PROJECT_DIR}"
+                }
             }
         }
     }
 
     post {
-        always {
-            // Actions that should happen after every build
-            cleanWs()
-        }
-        success {
-            // Actions that should happen after a successful build
-            echo 'Build succeeded!'
-        }
-        failure {
-            // Actions that should happen after a failed build
-            echo 'Build failed!'
-        }
+      always {
+        cleanWs()
+      }
     }
 }
