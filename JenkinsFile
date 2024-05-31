@@ -16,9 +16,9 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-         
-                        sh "git clone https://${GITHUB_KEY}@${REPO_URL} ."
-            
+                    dir("/home/pandit_alabi") {
+                         sh "git clone https://${GITHUB_KEY}@${REPO_URL} ."
+                    }
             }
         }
 
@@ -31,7 +31,7 @@ pipeline {
         stage('Build Project') {
             steps {
                     sh 'ng build'
-
+                    sh 'sudo cp /workspace/BillingDvLps/dist /home/pandit_alabi'
                     // mkdir frontend-dicst in the workspace
                     //  cp dist to \[WORKD]
                     // create new folder / frontend-dist
