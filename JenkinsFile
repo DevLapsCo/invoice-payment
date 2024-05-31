@@ -51,6 +51,7 @@ pipeline {
                 script {
                     // Copy the dist directory from the container to the host VM
                     sh "ls"
+                    sh "docker ps"
                     sh "docker cp ${CONTAINER_NAME}:~/project/${DIST_DIR} ${HOST_PROJECT_DIR}"
                 }
             }
