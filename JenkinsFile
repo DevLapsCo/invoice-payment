@@ -13,8 +13,8 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 dir("${PROJECT_DIR}") {
-                    withCredentials([string(credentialsId: 'github_secret_key', variable: 'GITHUB_TOKEN')]) {
-                        sh "git clone https://${GITHUB_TOKEN}@${REPO_URL} ."
+                    withCredentials([string(credentialsId: 'github_secret_key')]) {
+                        sh "git clone https://${github_secret_key}@${REPO_URL} ."
                     }
                 }
             }
