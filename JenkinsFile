@@ -4,7 +4,7 @@ pipeline {
     environment {
         REPO_URL = 'github.com/DevLapsCo/invoice-payment.git'
         DIST_DIR = 'dist'
-        PROJECT_DIR = '/project'  // Directory in the container
+        PROJECT_DIR = 'project'  // Directory in the container
         HOST_PROJECT_DIR = '/invoice-payment'  // Directory on the host VM
         CONTAINER_NAME = 'jenkins-blueocean'
         GITHUB_KEY = credentials('github_secret_key')
