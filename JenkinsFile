@@ -2,18 +2,18 @@ pipeline {
     agent any
 
     environment {
-        REPO_URL = 'https://github.com/<your-username>/<your-repo>.git'
+        REPO_URL = 'github.com/DevLapsCo/invoice-payment.git'
         DIST_DIR = 'dist'
         PROJECT_DIR = '/project'  // Directory in the container
-        HOST_PROJECT_DIR = '/path/to/your/project'  // Directory on the host VM
-        CONTAINER_NAME = 'jenkins'
+        HOST_PROJECT_DIR = '/home/pandit_alabi/invoice-paymnment'  // Directory on the host VM
+        CONTAINER_NAME = 'jenkins-blueocean'
     }
 
     stages {
         stage('Clone Repository') {
             steps {
                 dir("${PROJECT_DIR}") {
-                    withCredentials([string(credentialsId: 'github-token-id', variable: 'GITHUB_TOKEN')]) {
+                    withCredentials([string(credentialsId: 'github_secret_key', variable: 'GITHUB_TOKEN')]) {
                         sh "git clone https://${GITHUB_TOKEN}@${REPO_URL} ."
                     }
                 }
