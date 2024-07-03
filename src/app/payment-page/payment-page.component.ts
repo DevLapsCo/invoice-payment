@@ -15,6 +15,7 @@ export class PaymentPageComponent implements OnInit{
   headersWithoutJwt! : HttpHeaders;
 
   BillingData : any;
+  API_BASE_URL : string = "http://35.237.106.254:3000";
 
   constructor(private route : ActivatedRoute, private http: HttpClient){
     this.headersWithJwt = new HttpHeaders({
@@ -34,7 +35,7 @@ export class PaymentPageComponent implements OnInit{
       
       if(id !== null){
         this.loading = false;
-        this.http.post('http://34.148.76.213:3000/api/v1/quick-bill/getData' , id, {headers : this.headersWithoutJwt}).subscribe({
+        this.http.post(this.API_BASE_URL + '/api/v1/quick-bill/getData' , id, {headers : this.headersWithoutJwt}).subscribe({
           next: (n) => {
             this.BillingData = n;
         },
@@ -58,11 +59,11 @@ export class PaymentPageComponent implements OnInit{
      loading : boolean = true;
 
      MakePayment(){
-      this.http.post('http://34.148.76.213:3000/api/v1/quick-bill/init-payment', {
+      this.http.post(this.API_BASE_URL + '/api/v1/quick-bill/init-payment', {
         email : this.BillingData!.email,
         amount: this.BillingData!.bill * 100,
         currency : "GHS",
-        callback_url: "http://34.148.76.213:3000"
+        callback_url: this.API_BASE_URL
       }, {headers : this.headersWithoutJwt}).subscribe({
         next: (n:any) => {
           window.location.href = n!.data!.authorization_url;
@@ -75,7 +76,7 @@ export class PaymentPageComponent implements OnInit{
     
     verifyPayment(){
         const reference = this.route.snapshot.queryParamMap.get('reference');
-      this.http.post('http://34.148.76.213:3000/api/v1/quick-bill/verify-payment', reference
+      this.http.post(this.API_BASE_URL +'/api/v1/quick-bill/verify-payment', reference
       , {headers : this.headersWithoutJwt}).subscribe({
         next: (n:any) => {
           this.paymentComplete = true;
